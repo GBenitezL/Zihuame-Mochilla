@@ -6,6 +6,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
+app.set('views', './views')
+app.use(express.static('public'))
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -14,8 +16,17 @@ const pool = new Pool({
   }
 });
 
-app.get('/', (req, res) => {
-    res.render('pages/index.ejs');
+app.get('/', async (req, res) => {
+  try {
+      const client = await pool.connect();
+      const result = await client.query(
+      `select * from "Beneficiarios"`);
+      res.render('pages/index.ejs', { beneficiarios: result.rows } );
+      client.release();
+  } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+  }
 });
 
 app.get('/db', async (req, res) => {
@@ -29,7 +40,6 @@ app.get('/db', async (req, res) => {
         on "Beneficiarios".id_beneficiario = "Beneficiarios_Grupos".id_beneficiario
         inner join "Grupos"
         on "Grupos".id_grupo = "Beneficiarios_Grupos".id_grupo`);
-        console.log(result.rows[0]);
         res.render('pages/db.ejs', { beneficiarios: result.rows } );
         client.release();
     } catch (err) {
