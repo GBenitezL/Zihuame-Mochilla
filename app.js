@@ -21,7 +21,14 @@ app.get('/', (req, res) => {
 app.get('/db', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM "Beneficiarios"');
+        const result = await client.query(
+        `select "Beneficiarios"."id_beneficiario", "Beneficiarios"."Nombre", 
+        "Beneficiarios"."Fecha de Nacimiento", "Grupos"."Grupo", "Grupos"."Sede"
+        from "Beneficiarios"
+        inner join "Beneficiarios_Grupos"
+        on "Beneficiarios".id_beneficiario = "Beneficiarios_Grupos".id_beneficiario
+        inner join "Grupos"
+        on "Grupos".id_grupo = "Beneficiarios_Grupos".id_grupo`);
         console.log(result.rows[0]);
         res.render('pages/db.ejs', { beneficiarios: result.rows } );
         client.release();

@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zihuame Mochilla</title>
 </head>
+
 <body>
-    <p>ID: <%- beneficiarios[0].id_beneficiario %></p>
-    <p>Nombre: <%- beneficiarios[0].Nombre %></p>
+    <h1>Beneficiarios</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Grupo</th>
+            <th>Sede</th>
+        </tr>
+
+        <% for (var i=0; i < beneficiarios.length; i++) { %>
+            <tr>
+                <td>
+                    <%= beneficiarios[i].id_beneficiario %>
+                </td>
+                <td>
+                    <%= beneficiarios[i].Nombre %>
+                </td>
+                <td>
+                    <%= beneficiarios[i]['Fecha de Nacimiento'].toLocaleDateString('es-ES') %>
+                </td>
+                <td>
+                    <%= beneficiarios[i].Grupo %>
+                </td>
+                <td>
+                    <%= beneficiarios[i].Sede %>
+                </td>
+            </tr>
+            <% } %>
+    </table>
+
 </body>
+
 </html>
