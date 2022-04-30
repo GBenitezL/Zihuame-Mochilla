@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.get('/db', async (req, res) => {
+app.get('/grupos', async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query(
@@ -40,7 +40,7 @@ app.get('/db', async (req, res) => {
         on "Beneficiarios".id_beneficiario = "Beneficiarios_Grupos".id_beneficiario
         inner join "Grupos"
         on "Grupos".id_grupo = "Beneficiarios_Grupos".id_grupo`);
-        res.render('pages/db.ejs', { beneficiarios: result.rows } );
+        res.render('pages/grupos.ejs', { beneficiarios: result.rows } );
         client.release();
     } catch (err) {
         console.error(err);
