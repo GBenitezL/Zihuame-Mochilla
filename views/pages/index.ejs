@@ -1,30 +1,20 @@
 [/- include("../partials/header.ejs") /]
+
 <body>
     <h1>Beneficiarios</h1>
-    <table class="table table-hover" id="query">
+    <div class = "d-flex flex-row bg-info">
+        <input type="text" class="form-control" id="barraBusqueda" placeholder="Buscar Beneficiario">
+        <button type="button" class="btn btn-secondary" id="botonLimpiar"> Limpiar </button>
+        <button type="button" class="btn btn-primary" id="botonBusqueda"> Buscar </button>
+    </div>
+    <table class="table table-hover" id="tabla">
         <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Sede</th>
+            <th data-column="id_beneficiario" data-order="desc">ID &#9660</th>
+            <th data-column="Nombre" data-order="desc">Nombre &#9660</th>
+            <th data-column="Fecha de Nacimiento" data-order="desc">Fecha de Nacimiento &#9660</th>
+            <th data-column="Sede" data-order="desc">Sede &#9660</th>
         </tr>
-
-        [/ for (var i=0; i < beneficiarios.length; i++) { /]
-            <tr>
-                <td>
-                    [/= beneficiarios[i].id_beneficiario /]
-                </td>
-                <td>
-                    [/= beneficiarios[i].Nombre /]
-                </td>
-                <td>
-                    [/= beneficiarios[i]['Fecha de Nacimiento'].toLocaleDateString('es-ES') /]
-                </td>
-                <td>
-                    [/= beneficiarios[i].Sede /]
-                </td>
-            </tr>
-            [/ } /]
+        <tbody id="cuerpoTabla"></tbody>
     </table>
 
     <button id="botonDescarga" type="button" class="btn btn-primary"> Descargar CSV </button>
@@ -32,9 +22,70 @@
     [/- include("../partials/scripts.ejs") /]
 
     <script>
-        $('#botonDescarga').on('click', function(){
-            $('#query').table2csv({filename: 'Beneficiarios.csv'});
+        $('#botonDescarga').on('click', function () {
+            $('#tabla').table2csv({ filename: 'Beneficiarios.csv' });
         })
+    </script>
+
+    <script>
+        var beneficiarios = [/- JSON.stringify(beneficiarios) /];
+        poblarTabla(beneficiarios);
+
+        $('#botonBusqueda').on('click', function () {
+            var valor = $('#barraBusqueda').val();
+            var data = buscarTabla(valor, beneficiarios);
+            poblarTabla(data);
+        })
+        $('#botonLimpiar').on('click', function () {
+            $('#barraBusqueda').val('')
+            poblarTabla(beneficiarios);
+        })
+
+        $('th').on('click', function () {
+            var col = $(this).data('column');
+            var ord = $(this).data('order');
+            var texto = $(this).html();
+            texto = texto.substring(0, texto.length - 1);
+            if (ord == 'desc') {
+                $(this).data('order', 'asc');
+                beneficiarios = beneficiarios.sort((a, b) => a[col] > b[col] ? 1 : -1)
+                texto += '&#9660';
+            } else {
+                $(this).data('order', 'desc');
+                beneficiarios = beneficiarios.sort((a, b) => a[col] < b[col] ? 1 : -1)
+                texto += '&#9650';
+            }
+            $(this).html(texto);
+            poblarTabla(beneficiarios)
+        })
+
+        function poblarTabla(beneficiarios) {
+            var cuerpoTabla = document.getElementById("cuerpoTabla");
+            cuerpoTabla.innerHTML = '';
+            for (i = 0; i < beneficiarios.length; i++) {
+                var fila =
+                    '<tr>' +
+                    '<td>' + beneficiarios[i].id_beneficiario + '</td>' +
+                    '<td>' + beneficiarios[i].Nombre + '</td>' +
+                    '<td>' + new Date(beneficiarios[i]['Fecha de Nacimiento']).toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + beneficiarios[i].Sede + '</td>' +
+                    '</tr>';
+                cuerpoTabla.innerHTML += fila;
+            }
+        }
+        function buscarTabla(valor, data) {
+            var dataFiltrada = [];
+            for (i = 0; i < data.length; i++) {
+                valor = valor.toLowerCase();
+                var nombre = data[i].Nombre.toLowerCase();
+                var fecha = data[i]['Fecha de Nacimiento'];
+                var sede = data[i].Sede.toLowerCase();
+                if (nombre.includes(valor) || fecha.includes(valor) || sede.includes(valor)) {
+                    dataFiltrada.push(data[i]);
+                }
+            }
+            return dataFiltrada;
+        }
     </script>
 </body>
 

@@ -47,11 +47,12 @@
                 <th>Grupo</th>
             </tr>`;
             for (i = 0; i < miembros.length; i++){
-                datos += '<tr>' + 
-                '<td>' + miembros[i].id_beneficiario + '</td>' +
-                '<td>' + miembros[i].Nombre + '</td>' +
-                '<td>' + new Date(miembros[i]['Fecha de Nacimiento']).toLocaleDateString('es-ES') + '</td>' +
-                '<td>' + miembros[i].Grupo + '</td>' +
+                datos += 
+                '<tr>' + 
+                    '<td>' + miembros[i].id_beneficiario + '</td>' +
+                    '<td>' + miembros[i].Nombre + '</td>' +
+                    '<td>' + new Date(miembros[i]['Fecha de Nacimiento']).toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + miembros[i].Grupo + '</td>' +
                 '</tr>';
             }
             tabla.innerHTML = datos;
