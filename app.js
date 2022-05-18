@@ -1,42 +1,28 @@
+// Dependencias
 const express = require("express");
-const Pool = require("pg").Pool;
-require('dotenv').config()
-
+var path = require('path');
+const db = require("./public/js/db");
 const ejs = require("ejs");
+
+const beneficiariosRouter = require('./routes/beneficiariosRoute');
+
+const port = process.env.PORT || 3000;
+const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+
+app.use('/beneficiarios', beneficiariosRouter);
+
+//Configuracion EJS
+app.set('view engine', 'ejs');
 ejs.delimiter = '/';
 ejs.openDelimiter = '[';
 ejs.closeDelimiter = ']';
 
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.set('view engine', 'ejs');
-app.set('views', './views')
-app.use(express.static('public'))
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-app.get('/', async (req, res) => {
-  try {
-      const client = await pool.connect();
-      const result = await client.query(
-      `select * from "Beneficiarios"`);
-      res.render('pages/index.ejs', { beneficiarios: result.rows } );
-      client.release();
-  } catch (err) {
-      console.error(err);
-      res.send("Error " + err);
-  }
-});
-
 app.get('/formulario', async (req, res) => {
   try {
-    const client = await pool.connect();
+    const client = await db.connect();
     const result = await client.query(`select "Proyecto" from "Proyectos"`);
     res.render('pages/form.ejs', { proyectos: result.rows } );
     client.release();
@@ -48,7 +34,7 @@ app.get('/formulario', async (req, res) => {
 
 app.get('/grupos', async (req, res) => {
     try {
-        const client = await pool.connect();
+        const client = await db.connect();
         const grupos = await client.query(`select * from "Grupos"`);
         const beneficiarios = await client.query(
           `select b."id_beneficiario", b."Nombre", b."Fecha de Nacimiento", g."Grupo"
