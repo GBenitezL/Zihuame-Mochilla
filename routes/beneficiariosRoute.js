@@ -1,5 +1,6 @@
 const express = require('express');
 const beneficiariosModel = require('../models/beneficiarios');
+const proyectosModel = require('../models/proyectos');
 const router = express.Router();
 
 router.route('/').get(async (req, res) => {
@@ -12,13 +13,23 @@ router.route('/').get(async (req, res) => {
   }
 });
 
+router.route('/agregar').get(async (req, res) =>{
+    try {
+      const result = await proyectosModel.get();
+      res.render('pages/agregar.ejs', { proyectos: result.rows } );
+  } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+  }
+  })
+
 router.route('/:id').get(async (req, res)=>{
   const result = await beneficiariosModel.getById(req.params.id)
     .catch(err => res.status(400).json('Error: ' + err));
     res.json(result);
 })
 
-router.route('/').post((req, res)=>{
+router.route('/agregar').post((req, res)=>{
   const {nombre, fechaNacimiento, sede} = req.body;
   beneficiariosModel.insert(nombre, fechaNacimiento, sede)
     .then(()=> res.json("Beneficiario Insertado"))

@@ -1,29 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zihuame Mochilla</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
+[/- include("../partials/header.ejs") /]
 
 <body>
     <form>
         <h1>Dar de alta un Beneficiario</h1>
         <div class="row">
             <div class="col-md-6 mb-4">
-
                 <div class="form-outline">
                     <input type="text" id="nombre" class="form-control form-control-lg" />
                     <label class="form-label" for="nombre">Nombre(s)</label>
                 </div>
-
             </div>
             <div class="col-md-6 mb-4">
-
                 <div class="form-outline">
                     <input type="text" id="apellido" class="form-control form-control-lg" />
                     <label class="form-label" for="apellido">Apellido(s)</label>
@@ -31,20 +18,15 @@
 
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-6 mb-4 d-flex align-items-center">
-
                 <div class="form-outline datepicker w-100">
                     <input type="date" class="form-control form-control-lg" id="fechaNacimiento" />
                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
                 </div>
-
             </div>
             <div class="col-md-6 mb-4">
-
                 <h6 class="mb-2 pb-1">Genero: </h6>
-
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femenino" value="option1"
                         checked />
@@ -57,15 +39,12 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-6 mb-4 pb-2">
-
                 <div class="form-outline">
                     <input type="email" id="emailAddress" class="form-control form-control-lg" />
                     <label class="form-label" for="emailAddress">Email</label>
                 </div>
-
             </div>
             <div class="col-md-6 mb-4 pb-2">
 
@@ -73,13 +52,11 @@
                     <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
                     <label class="form-label" for="phoneNumber">Phone Number</label>
                 </div>
-
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-
                 <select class="select form-control-lg">
                     <option value="1" disabled>Choose option</option>
                     <option value="2">Subject 1</option>
@@ -87,7 +64,6 @@
                     <option value="4">Subject 3</option>
                 </select>
                 <label class="form-label select-label">Choose option</label>
-
             </div>
         </div>
         <div class="form-check">
@@ -97,24 +73,11 @@
                 Default checkbox
             </label>
         </div>
-
-
         <div class="mt-4 pt-2">
             <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
         </div>
-
     </form>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-    <script>
-        $('#botonDescarga').on('click', function () {
-            $('#query').table2csv({ filename: 'Grupos.csv' });
-        })
-    </script>
+    [/- include("../partials/scripts.ejs") /]
 </body>
 
 </html>

@@ -9,10 +9,11 @@
     </div>
     <table class="table table-hover" id="tabla">
         <tr>
-            <th data-column="id_beneficiario" data-order="desc">ID &#9660</th>
-            <th data-column="Nombre" data-order="desc">Nombre &#9660</th>
-            <th data-column="Fecha de Nacimiento" data-order="desc">Fecha de Nacimiento &#9660</th>
-            <th data-column="Sede" data-order="desc">Sede &#9660</th>
+            <th data-column="id_beneficiario" data-order="desc">ID</th>
+            <th data-column="Nombre" data-order="desc">Nombre</th>
+            <th data-column="Fecha de Nacimiento" data-order="desc">Fecha de Nacimiento</th>
+            <th data-column="Edad" data-order="desc">Edad</th>
+            <th data-column="Sede" data-order="desc">Sede</th>
         </tr>
         <tbody id="cuerpoTabla"></tbody>
     </table>
@@ -44,30 +45,29 @@
         $('th').on('click', function () {
             var col = $(this).data('column');
             var ord = $(this).data('order');
-            var texto = $(this).html();
-            texto = texto.substring(0, texto.length - 1);
             if (ord == 'desc') {
                 $(this).data('order', 'asc');
                 beneficiarios = beneficiarios.sort((a, b) => a[col] > b[col] ? 1 : -1)
-                texto += '&#9660';
             } else {
                 $(this).data('order', 'desc');
                 beneficiarios = beneficiarios.sort((a, b) => a[col] < b[col] ? 1 : -1)
-                texto += '&#9650';
             }
-            $(this).html(texto);
             poblarTabla(beneficiarios)
         })
 
         function poblarTabla(beneficiarios) {
             var cuerpoTabla = document.getElementById("cuerpoTabla");
+            var fechaActual = new Date();
             cuerpoTabla.innerHTML = '';
             for (i = 0; i < beneficiarios.length; i++) {
+                var cumple = new Date(beneficiarios[i]['Fecha de Nacimiento']);
+                var edad = Math.floor((fechaActual-cumple)/31557600000);
                 var fila =
                     '<tr>' +
                     '<td>' + beneficiarios[i].id_beneficiario + '</td>' +
                     '<td>' + beneficiarios[i].Nombre + '</td>' +
-                    '<td>' + new Date(beneficiarios[i]['Fecha de Nacimiento']).toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + cumple.toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + edad + '</td>' +
                     '<td>' + beneficiarios[i].Sede + '</td>' +
                     '</tr>';
                 cuerpoTabla.innerHTML += fila;
