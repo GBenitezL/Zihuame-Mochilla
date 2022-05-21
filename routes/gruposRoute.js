@@ -28,21 +28,21 @@ router.route('/:id').get(async (req, res)=>{
 })
 
 router.route('/').post((req, res)=>{
-  const {nombre, fechaNacimiento, sede} = req.body;
-  gruposModel.insert(nombre, fechaNacimiento, sede)
-    .then(()=> res.json("Beneficiario Insertado"))
+  const {grupo, id_proyecto} = req.body;
+  gruposModel.insert(grupo, id_proyecto)
+    .then(()=> res.json("Grupo Insertado Insertado"))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
 router.route('/:id').delete((req, res)=>{
   gruposModel.delete(req.params.id)
-    .then(()=> res.json("Beneficiario Borrado"))
+    .then(()=> res.json("Grupo Borrado"))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
 router.route('/:id').post((req, res)=>{
-  const {nombre, fechaNacimiento, sede} = req.body;
-  gruposModel.update(req.params.id, nombre, fechaNacimiento, sede)
+  const {grupo, id_proyecto} = req.body;
+  gruposModel.update(req.params.id, grupo, id_proyecto)
     .then(()=> res.json("Beneficiario Actualizado"))
     .catch(err => res.status(400).json('Error: ' + err));
 })

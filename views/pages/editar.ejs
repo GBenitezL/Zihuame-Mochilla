@@ -2,23 +2,23 @@
 
 <body style="margin:auto; width: 90%;">
     <form method="post" action="/beneficiarios/agregar">
-        <h1>Dar de alta un Beneficiario</h1>
+        <h1>Editar un Beneficiario</h1>
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="nombre" class="form-control form-control-lg" name="nombre" />
+                    <input type="text" id="nombre" class="form-control form-control-lg" name="nombre"/>
                     <label class="form-label" for="nombre">Nombre(s)</label>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="apellidoP" class="form-control form-control-lg" name="apellidoP" />
+                    <input type="text" id="apellidoP" class="form-control form-control-lg" name="apellidoP"/>
                     <label class="form-label" for="apellidoP">Apellido Paterno</label>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="apellidoM" class="form-control form-control-lg" name="apellidoM" />
+                    <input type="text" id="apellidoM" class="form-control form-control-lg" name="apellidoM"/>
                     <label class="form-label" for="apellidoM">Apellido Materno</label>
                 </div>
             </div>
@@ -34,11 +34,13 @@
             <div class="col-md-6 mb-4">
                 <h6 class="mb-2 pb-1">Sexo </h6>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexo" id="femenino" value="Femenino" checked />
+                    <input class="form-check-input" type="radio" name="sexo" id="femenino"
+                        value="Femenino" checked />
                     <label class="form-check-label" for="femenino">Femenino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexp" id="masculino" value="Masculino" />
+                    <input class="form-check-input" type="radio" name="sexp" id="masculino"
+                        value="Masculino" />
                     <label class="form-check-label" for="masculino">Masculino</label>
                 </div>
             </div>
@@ -47,25 +49,25 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="calle" class="form-control form-control-lg" name="calle" />
+                    <input type="text" id="calle" class="form-control form-control-lg" name="calle"/>
                     <label class="form-label" for="calle">Calle</label>
                 </div>
             </div>
             <div class="col-md-2 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="noExt" class="form-control form-control-lg" name="noExt" />
+                    <input type="text" id="noExt" class="form-control form-control-lg" name="noExt"/>
                     <label class="form-label" for="noExt">No. Exterior</label>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="colonia" class="form-control form-control-lg" name="colonia" />
+                    <input type="text" id="colonia" class="form-control form-control-lg" name="colonia"/>
                     <label class="form-label" for="colonia">Colonia</label>
                 </div>
             </div>
             <div class="col-md-3 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="municipio" class="form-control form-control-lg" name="municipio" />
+                    <input type="text" id="municipio" class="form-control form-control-lg" name="municipio"/>
                     <label class="form-label" for="municipio">Municipio</label>
                 </div>
             </div>
@@ -74,31 +76,34 @@
         <div class="row">
             <div class="col-md-6 mb-4 pb-2">
                 <div class="form-outline">
-                    <input type="text" id="etnia" class="form-control form-control-lg" name="etnia" />
+                    <input type="text" id="etnia" class="form-control form-control-lg" name="etnia"/>
                     <label class="form-label" for="etnia">Etnia</label>
                 </div>
             </div>
             <div class="col-md-6 mb-4 pb-2">
                 <div class="form-outline">
-                    <input type="text" id="grado" class="form-control form-control-lg" name="grado" />
+                    <input type="text" id="grado" class="form-control form-control-lg" name="grado"/>
                     <label class="form-label" for="grado">Grado Escolar</label>
                 </div>
             </div>
         </div>
-        <h3>Grupos</h3>
+
         <div class="row">
-            [/ for (var i=0; i < grupos.length; i++) { /] <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="[/=grupos[i].Grupo/]" id="[/=grupos[i].Grupo/]">
-                <label class="form-check-label" for="[/=grupos[i].Grupo/]">[/=grupos[i].Grupo/]</label>
-        </div>
-        [/ } /]
+            <div class="col-12">
+                <select class="select form-control-lg">
+                    <option value="1" disabled>Choose option</option>
+                    <option value="2">Subject 1</option>
+                    <option value="3">Subject 2</option>
+                    <option value="4">Subject 3</option>
+                </select>
+                <label class="form-label select-label">Choose option</label>
+            </div>
         </div>
 
         <div class="mt-4 pt-2"">
-            <input class=" btn btn-primary btn-lg" type="submit" value="Submit">
+            <input class="btn btn-primary btn-lg" type="submit" value="Submit">
         </div>
     </form>
     [/- include("../partials/scripts.ejs") /]
 </body>
-
 </html>

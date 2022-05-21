@@ -1,30 +1,40 @@
 [/- include("../partials/header.ejs") /]
 
-<body>
+<body style="width: 95%; margin: auto;">
     <h1>Beneficiarios</h1>
-    <div class = "d-flex flex-row bg-info">
+    <div class="d-flex flex-row bg-info">
         <input type="text" class="form-control" id="barraBusqueda" placeholder="Buscar Beneficiario">
         <button type="button" class="btn btn-secondary" id="botonLimpiar"> Limpiar </button>
         <button type="button" class="btn btn-primary" id="botonBusqueda"> Buscar </button>
     </div>
+    <br>
+    <button id="botonDescarga" type="button" class="btn btn-primary"> Descargar CSV </button>
     <table class="table table-hover" id="tabla">
         <tr>
             <th data-column="id_beneficiario" data-order="desc">ID</th>
             <th data-column="Nombre" data-order="desc">Nombre</th>
+            <th data-column="ApellidoP" data-order="desc">Apellido Paterno</th>
+            <th data-column="ApellidoM" data-order="desc">Apellido Materno</th>
+            <th data-column="Sexo" data-order="desc">Sexo</th>
             <th data-column="Fecha de Nacimiento" data-order="desc">Fecha de Nacimiento</th>
             <th data-column="Edad" data-order="desc">Edad</th>
-            <th data-column="Sede" data-order="desc">Sede</th>
+            <th data-column="Calle" data-order="desc">Calle</th>
+            <th data-column="NoExt" data-order="desc">No. Ext</th>
+            <th data-column="Colonia" data-order="desc">Colonia</th>
+            <th data-column="Municipio" data-order="desc">Municipio</th>
+            <th data-column="Etnia" data-order="desc">Etnia</th>
+            <th data-column="GradoEscolar" data-order="desc">Grado Escolar</th>
+            <th class="excluir">Editar</th>
+            <th class="excluir">Eliminar</th>
         </tr>
         <tbody id="cuerpoTabla"></tbody>
     </table>
-
-    <button id="botonDescarga" type="button" class="btn btn-primary"> Descargar CSV </button>
 
     [/- include("../partials/scripts.ejs") /]
 
     <script>
         $('#botonDescarga').on('click', function () {
-            $('#tabla').table2csv({ filename: 'Beneficiarios.csv' });
+            $('#tabla').table2csv({ filename: 'Beneficiarios.csv', excludeColumns: '.excluir' });
         })
     </script>
 
@@ -61,14 +71,25 @@
             cuerpoTabla.innerHTML = '';
             for (i = 0; i < beneficiarios.length; i++) {
                 var cumple = new Date(beneficiarios[i]['Fecha de Nacimiento']);
-                var edad = Math.floor((fechaActual-cumple)/31557600000);
+                var edad = Math.floor((fechaActual - cumple) / 31557600000);
                 var fila =
                     '<tr>' +
                     '<td>' + beneficiarios[i].id_beneficiario + '</td>' +
                     '<td>' + beneficiarios[i].Nombre + '</td>' +
+                    '<td>' + beneficiarios[i]['Apellido Paterno'] + '</td>' +
+                    '<td>' + beneficiarios[i]['Apellido Materno'] + '</td>' +
+                    '<td>' + beneficiarios[i].Sexo + '</td>' +
                     '<td>' + cumple.toLocaleDateString('es-ES') + '</td>' +
                     '<td>' + edad + '</td>' +
-                    '<td>' + beneficiarios[i].Sede + '</td>' +
+                    '<td>' + beneficiarios[i].Calle + '</td>' +
+                    '<td>' + beneficiarios[i].NoExt + '</td>' +
+                    '<td>' + beneficiarios[i].Colonia + '</td>' +
+                    '<td>' + beneficiarios[i].Municipio + '</td>' +
+                    '<td>' + beneficiarios[i].Etnia + '</td>' +
+                    '<td>' + beneficiarios[i]['Grado Escolar'] + '</td>' +
+                    `<td><a href="/beneficiarios/editar/${beneficiarios[i].id_beneficiario}" class="btn btn-warning">Editar</a></td>` +
+                    `<td><a href="/beneficiarios/borrar/${beneficiarios[i].id_beneficiario}" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este beneficiario?')" >Borrar</a></td>` +
                     '</tr>';
                 cuerpoTabla.innerHTML += fila;
             }
@@ -78,9 +99,28 @@
             for (i = 0; i < data.length; i++) {
                 valor = valor.toLowerCase();
                 var nombre = data[i].Nombre.toLowerCase();
+                var apellidoP = data[i]['Apellido Paterno'].toLowerCase();
+                var apellidoM = data[i]['Apellido Materno'].toLowerCase();
+                var sexo = data[i].Sexo.toLowerCase();
                 var fecha = data[i]['Fecha de Nacimiento'];
-                var sede = data[i].Sede.toLowerCase();
-                if (nombre.includes(valor) || fecha.includes(valor) || sede.includes(valor)) {
+                var calle = data[i].Calle.toLowerCase();
+                var noExt = data[i].NoExt.toLowerCase();
+                var colonia = data[i].Colonia.toLowerCase();
+                var municipio = data[i].Municipio.toLowerCase();
+                var etnia = data[i].Etnia.toLowerCase();
+                var grado = data[i]['Grado Escolar'].toLowerCase();
+
+                if (nombre.includes(valor)
+                    || fecha.includes(valor)
+                    || apellidoP.includes(valor)
+                    || apellidoM.includes(valor)
+                    || sexo.includes(valor)
+                    || calle.includes(valor)
+                    || noExt.includes(valor)
+                    || colonia.includes(valor)
+                    || municipio.includes(valor)
+                    || etnia.includes(valor)
+                    || grado.includes(valor)) {
                     dataFiltrada.push(data[i]);
                 }
             }

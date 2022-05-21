@@ -1,10 +1,13 @@
 const db = require('../public/js/db');
 module.exports = {
-    async insert(nombre, fechaNacimiento, sede) {
+    async insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
+        calle, noExt, colonia, municipio, etnia, grado) {
         let result = await db.query(`insert into "Beneficiarios"
-        ("Nombre", "Fecha de Nacimiento", "Sede")
+        ("Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha de Nacimiento", 
+        "Calle", "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar")
         values
-        ($1, $2, $3)`, [nombre, fechaNacimiento, sede]);
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, 
+        [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado]);
         return result;
     },
     async get() {
@@ -15,12 +18,22 @@ module.exports = {
         const result = await db.query(`select * from "Beneficiarios" where id_beneficiario = $1`, [id]);
         return result.rows[0];
     },
-    async update(id, nombre, fechaNacimiento, sede) {
+    async update(id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
+        calle, noExt, colonia, municipio, etnia, grado) {
         const result = db.query(`update "Beneficiarios"
-        set "Nombre" = $1,
-        "Fecha de Nacimiento" = $2,
-        "Sede" = $3
-        where id_beneficiario = $4`, [nombre, fechaNacimiento, sede, id]);
+        set "Nombre" = $2,
+        "Apellido Paterno" = $3,
+        "Apellido Materno" = $4,
+        "Sexo" = $5,
+        "Fecha de Nacimiento" = $6,
+        "Calle" = $7,
+        "NoExt" = $8,
+        "Colonia" = $9,
+        "Municipio" = $10,
+        "Etnia" = $11,
+        "Grado Escolar" = $12,
+        where id_beneficiario = $1`,
+        [id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado]);
         return result;
     },
     async delete(id) {
