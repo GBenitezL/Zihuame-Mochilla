@@ -48,7 +48,6 @@ router.route('/:id').get(async (req, res) => {
 router.route('/agregar').post((req, res) => {
   const fechaAgregado = new Date().toISOString().split('T')[0];
   const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado } = req.body;
-  console.log(fechaAgregado);
   beneficiariosModel.insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento, 
     calle, noExt, colonia, municipio, etnia, grado, fechaAgregado)
     .then(() => res.redirect('/beneficiarios'))
