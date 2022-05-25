@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="form-outline">
-                    <input type="text" id="nombre" class="form-control form-control-lg" name="nombre" />
+                    <input type="text" id="nombre" class="form-control form-control-lg" name="nombre"/>
                     <label class="form-label" for="nombre">Nombre(s)</label>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-6 mb-4 d-flex align-items-center">
                 <div class="form-outline datepicker w-100">
-                    <input type="date" class="form-control form-control-lg" id="fechaNacimiento" />
+                    <input type="date" class="form-control form-control-lg" id="fechaNacimiento" name="fechaNacimiento"/>
                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <label class="form-check-label" for="femenino">Femenino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexp" id="masculino" value="Masculino" />
+                    <input class="form-check-input" type="radio" name="sexo" id="masculino" value="Masculino" />
                     <label class="form-check-label" for="masculino">Masculino</label>
                 </div>
             </div>
@@ -94,8 +94,9 @@
         [/ } /]
         </div>
 
-        <div class="mt-4 pt-2"">
-            <input class=" btn btn-primary btn-lg" type="submit" value="Submit">
+        <div class="mt-4 pt-2" style="margin: auto;">
+            <a class="btn btn-danger btn-lg" href="/beneficiarios">Cancelar</a>  
+            <input class=" btn btn-primary btn-lg" type="submit" value="Agregar">
         </div>
     </form>
     [/- include("../partials/scripts.ejs") /]

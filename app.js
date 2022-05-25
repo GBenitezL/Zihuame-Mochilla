@@ -17,6 +17,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use('/beneficiarios', beneficiariosRouter);
 app.use('/grupos', gruposRouter);
+app.get('/', (req, res)=>
+    res.redirect('/beneficiarios')
+)
 
 //Configuracion EJS
 app.set('view engine', 'ejs');

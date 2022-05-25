@@ -1,6 +1,6 @@
 [/- include("../partials/header.ejs") /]
 
-<body style="width: 95%; margin: auto;">
+<body style="width: 90%; margin: auto;">
     <h1>Beneficiarios</h1>
     <div class="d-flex flex-row bg-info">
         <input type="text" class="form-control" id="barraBusqueda" placeholder="Buscar Beneficiario">
@@ -8,7 +8,8 @@
         <button type="button" class="btn btn-primary" id="botonBusqueda"> Buscar </button>
     </div>
     <br>
-    <button id="botonDescarga" type="button" class="btn btn-primary"> Descargar CSV </button>
+    <button id="botonDescarga" type="button" class="btn btn-success"> Descargar CSV </button>
+    <a class="btn btn-primary" href="beneficiarios/agregar">Agregar Beneficiario</a>  
     <table class="table table-hover" id="tabla">
         <tr>
             <th data-column="id_beneficiario" data-order="desc">ID</th>
@@ -24,6 +25,7 @@
             <th data-column="Municipio" data-order="desc">Municipio</th>
             <th data-column="Etnia" data-order="desc">Etnia</th>
             <th data-column="GradoEscolar" data-order="desc">Grado Escolar</th>
+            <th data-column="Fecha Agregado" data-order="desc">Fecha Agregado</th>
             <th class="excluir">Editar</th>
             <th class="excluir">Eliminar</th>
         </tr>
@@ -71,6 +73,7 @@
             cuerpoTabla.innerHTML = '';
             for (i = 0; i < beneficiarios.length; i++) {
                 var cumple = new Date(beneficiarios[i]['Fecha de Nacimiento']);
+                var agregado = new Date(beneficiarios[i]['Fecha Agregado']);
                 var edad = Math.floor((fechaActual - cumple) / 31557600000);
                 var fila =
                     '<tr>' +
@@ -87,7 +90,8 @@
                     '<td>' + beneficiarios[i].Municipio + '</td>' +
                     '<td>' + beneficiarios[i].Etnia + '</td>' +
                     '<td>' + beneficiarios[i]['Grado Escolar'] + '</td>' +
-                    `<td><a href="/beneficiarios/editar/${beneficiarios[i].id_beneficiario}" class="btn btn-warning">Editar</a></td>` +
+                    '<td>' + agregado.toLocaleDateString('es-ES') + '</td>' +
+                    `<td><a href="/beneficiarios/editar/${beneficiarios[i].id_beneficiario}" class="btn btn-secondary">Editar</a></td>` +
                     `<td><a href="/beneficiarios/borrar/${beneficiarios[i].id_beneficiario}" class="btn btn-danger"
                         onclick="return confirm('¿Estás seguro de que quieres borrar este beneficiario?')" >Borrar</a></td>` +
                     '</tr>';
@@ -98,6 +102,7 @@
             var dataFiltrada = [];
             for (i = 0; i < data.length; i++) {
                 valor = valor.toLowerCase();
+                var id = String(data[i].id_beneficiario)
                 var nombre = data[i].Nombre.toLowerCase();
                 var apellidoP = data[i]['Apellido Paterno'].toLowerCase();
                 var apellidoM = data[i]['Apellido Materno'].toLowerCase();
@@ -127,6 +132,7 @@
             return dataFiltrada;
         }
     </script>
+    <script src="js/table2csv.min.js"></script>
 </body>
 
 </html>

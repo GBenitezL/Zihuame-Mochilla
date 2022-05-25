@@ -1,13 +1,13 @@
 const db = require('../public/js/db');
 module.exports = {
     async insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-        calle, noExt, colonia, municipio, etnia, grado) {
+        calle, noExt, colonia, municipio, etnia, grado, fechaAgregado) {
         let result = await db.query(`insert into "Beneficiarios"
         ("Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha de Nacimiento", 
-        "Calle", "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar")
+        "Calle", "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar", "Fecha Agregado")
         values
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, 
-        [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado]);
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, 
+        [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado, fechaAgregado]);
         return result;
     },
     async get() {
@@ -31,7 +31,7 @@ module.exports = {
         "Colonia" = $9,
         "Municipio" = $10,
         "Etnia" = $11,
-        "Grado Escolar" = $12,
+        "Grado Escolar" = $12
         where id_beneficiario = $1`,
         [id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado]);
         return result;
