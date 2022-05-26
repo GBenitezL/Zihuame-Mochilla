@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../public/js/db');
+const beneficiariosModel = require('../models/beneficiarios')
 const gruposModel = require('../models/grupos');
 const router = express.Router();
 
@@ -7,7 +8,7 @@ router.route('/').get(async (req, res) => {
     try {
         const grupos = await gruposModel.get();
         const beneficiarios = await db.query(
-          `select b."id_beneficiario", b."Nombre", b."Fecha de Nacimiento", g."Grupo"
+          `select b.*, g.*
             from "Beneficiarios" b
             inner join "Beneficiarios_Grupos" bg
             on b."id_beneficiario" = bg."id_beneficiario"
@@ -44,6 +45,14 @@ router.route('/:id').post((req, res)=>{
   const {grupo, id_proyecto} = req.body;
   gruposModel.update(req.params.id, grupo, id_proyecto)
     .then(()=> res.json("Beneficiario Actualizado"))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/borrar/:id/:grupo').get(async (req, res) =>{
+  const id_beneficiario = req.params.id;
+  const id_grupo = req.params.grupo;
+  beneficiariosModel.deleteGroup(id_beneficiario, id_grupo)
+    .then(()=> res.redirect('/grupos'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 

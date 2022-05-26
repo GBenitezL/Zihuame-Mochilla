@@ -15,6 +15,14 @@ module.exports = {
         const result = await db.query(`select * from "Grupos" where id_grupo = $1`, [id]);
         return result.rows[0];
     },
+    async getByUserId(id_beneficiario){
+        const result = await db.query(`select g.id_grupo, g."Grupo"
+        from "Beneficiarios_Grupos" bg
+        inner join "Grupos" g
+        on bg.id_grupo = g.id_grupo
+        where bg.id_beneficiario = $1`, [id_beneficiario]);
+        return result;
+    },
     async update(id, grupo, id_proyecto) {
         const result = db.query(`update "Grupos"
         set "Grupo" = $1,

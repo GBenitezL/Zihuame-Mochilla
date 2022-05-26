@@ -40,5 +40,19 @@ module.exports = {
         const result = db.query(`delete from "Beneficiarios"
         where id_beneficiario = $1`, [id]);
         return result;
-    }
+    },
+    async addGroup(id_beneficiario, id_grupo) {
+        const result = db.query(`insert into "Beneficiarios_Grupos" values ($1, $2)`, [id_beneficiario, id_grupo]);
+        return result;
+    },
+    async deleteGroup(id_beneficiario, id_grupo) {
+        const result = db.query(`delete from "Beneficiarios_Grupos" where id_beneficiario = $1 and id_grupo = $2`, 
+        [id_beneficiario, id_grupo]);
+        return result;
+    },
+    async deleteFromGroup(id_beneficiario){
+        const result = db.query(`delete from "Beneficiarios_Grupos"
+        where id_beneficiario = $1`, [id_beneficiario]);
+        return result;
+    } 
 }

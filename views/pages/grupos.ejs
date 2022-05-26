@@ -1,13 +1,15 @@
 [/- include("../partials/header.ejs") /]
 
-<body>
+<body style="margin:auto; width: 90%;">
     <h1>Grupos</h1>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <label class="input-group-text" for="selectGrupo">Grupos</label>
         </div>
         <select class="custom-select" id="selectGrupo">
-            [/ for (var i=0; i < grupos.length; i++) { /] <option value="[/=grupos[i].Grupo/]">
+            <option value="" disabled selected>Escoge un Grupo</option>
+            [/ for (var i=0; i < grupos.length; i++) { /] 
+                <option value="[/=grupos[i].Grupo/]">
                 [/= grupos[i].Grupo; /]
                 </option>
                 [/ } /]
@@ -15,16 +17,36 @@
         <button id="filtrar" type="button" class="btn btn-primary">Filtrar</button>
     </div>
 
-    <table class="table table-hover" id="query"></table>
-
     <button id="botonDescarga" type="button" class="btn btn-primary">Descargar CSV </button>
+    <a class="btn btn-secondary" href="/beneficiarios">Volver</a>   
+    <br>
+    <table class="table table-hover" id="tabla">
+        <tr>
+            <th data-column="id_beneficiario" data-order="desc">ID</th>
+            <th data-column="Nombre" data-order="desc">Nombre</th>
+            <th data-column="ApellidoP" data-order="desc">Apellido Paterno</th>
+            <th data-column="ApellidoM" data-order="desc">Apellido Materno</th>
+            <th data-column="Sexo" data-order="desc">Sexo</th>
+            <th data-column="Fecha de Nacimiento" data-order="desc">Fecha de Nacimiento</th>
+            <th data-column="Edad" data-order="desc">Edad</th>
+            <th data-column="Calle" data-order="desc">Calle</th>
+            <th data-column="NoExt" data-order="desc">No. Ext</th>
+            <th data-column="Colonia" data-order="desc">Colonia</th>
+            <th data-column="Municipio" data-order="desc">Municipio</th>
+            <th data-column="Etnia" data-order="desc">Etnia</th>
+            <th data-column="GradoEscolar" data-order="desc">Grado Escolar</th>
+            <th data-column="Fecha Agregado" data-order="desc">Fecha Agregado</th>
+            <th class="excluir">Editar</th>
+        </tr>
+        <tbody id="cuerpoTabla"></tbody>
+    </table>
 
     [/- include("../partials/scripts.ejs") /]
 
     <script>
         $('#botonDescarga').on('click', function () {
             var grupoSeleccionado = $("#selectGrupo").val();
-            $('#query').table2csv({ filename: grupoSeleccionado + '.csv' });
+            $('#tabla').table2csv({ filename: grupoSeleccionado + '.csv' });
         })
     </script>
 
@@ -38,24 +60,35 @@
                     miembros.push(beneficiarios[i])
                 }
             }
-            var tabla = document.getElementById("query")
-            datos = 
-            `<tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Fecha de Nacimiento</th>
-                <th>Grupo</th>
-            </tr>`;
+            var cuerpoTabla = document.getElementById("cuerpoTabla");
+            var fechaActual = new Date();
+            cuerpoTabla.innerHTML = '';
             for (i = 0; i < miembros.length; i++){
-                datos += 
-                '<tr>' + 
+                var cumple = new Date(miembros[i]['Fecha de Nacimiento']);
+                var agregado = new Date(miembros[i]['Fecha Agregado']);
+                var edad = Math.floor((fechaActual - cumple) / 31557600000);
+                var fila = 
+                '<tr>' +
                     '<td>' + miembros[i].id_beneficiario + '</td>' +
                     '<td>' + miembros[i].Nombre + '</td>' +
-                    '<td>' + new Date(miembros[i]['Fecha de Nacimiento']).toLocaleDateString('es-ES') + '</td>' +
-                    '<td>' + miembros[i].Grupo + '</td>' +
+                    '<td>' + miembros[i]['Apellido Paterno'] + '</td>' +
+                    '<td>' + miembros[i]['Apellido Materno'] + '</td>' +
+                    '<td>' + miembros[i].Sexo + '</td>' +
+                    '<td>' + cumple.toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + edad + '</td>' +
+                    '<td>' + miembros[i].Calle + '</td>' +
+                    '<td>' + miembros[i].NoExt + '</td>' +
+                    '<td>' + miembros[i].Colonia + '</td>' +
+                    '<td>' + miembros[i].Municipio + '</td>' +
+                    '<td>' + miembros[i].Etnia + '</td>' +
+                    '<td>' + miembros[i]['Grado Escolar'] + '</td>' +
+                    '<td>' + agregado.toLocaleDateString('es-ES') + '</td>' +
+                    `<td class="excluir"><a href="/grupos/borrar/${miembros[i].id_beneficiario}/${miembros[i].id_grupo}" 
+                        class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este beneficiario?')" >Borrar</a></td>` +
                 '</tr>';
+                cuerpoTabla.innerHTML += fila;
             }
-            tabla.innerHTML = datos;
         })
     </script>
     <script src="js/table2csv.min.js"></script>

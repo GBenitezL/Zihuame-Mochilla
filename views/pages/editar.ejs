@@ -97,18 +97,10 @@
                 </div>
             </div>
         </div>
-
-        <h3>Grupos</h3>
-        <div class="row">
-            [/ for (var i=0; i < grupos.length; i++) { /] <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="[/=grupos[i].Grupo/]" id="[/=grupos[i].Grupo/]">
-                <label class="form-check-label" for="[/=grupos[i].Grupo/]">[/=grupos[i].Grupo/]</label>
         </div>
-        [/ } /]
-        </div>
-
+        <a class=" btn btn-secondary btn-lg" href="/beneficiarios/grupos/[/=beneficiario.id_beneficiario/]">Grupos</a>
         <div class="mt-4 pt-2"">
-            <a class="btn btn-danger btn-lg" href="/beneficiarios">Cancelar</a> 
+            <a class=" btn btn-danger btn-lg" href="/beneficiarios">Cancelar</a>
             <input class=" btn btn-primary btn-lg" type="submit" value="Guardar">
         </div>
     </form>
