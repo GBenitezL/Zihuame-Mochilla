@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../public/js/db');
 const beneficiariosModel = require('../models/beneficiarios')
 const gruposModel = require('../models/grupos');
+const proyectosModel = require('../models/proyectos');
 const router = express.Router();
 
 router.route('/').get(async (req, res) => {
@@ -22,10 +23,21 @@ router.route('/').get(async (req, res) => {
     }
 });
 
+router.route('/agregar').get(async (req, res) => {
+  try {
+    const proyectos = await proyectosModel.get();
+    const grupos = await gruposModel.get();
+    res.render('pages/editarGrupos.ejs', {proyectos:proyectos.rows, grupos:grupos.rows});
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
+
 router.route('/:id').get(async (req, res)=>{
   const result = await gruposModel.getById(req.params.id)
+    .then(() =>res.json(result))
     .catch(err => res.status(400).json('Error: ' + err));
-    res.json(result);
 })
 
 router.route('/').post((req, res)=>{
