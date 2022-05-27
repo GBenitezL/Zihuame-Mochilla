@@ -23,7 +23,7 @@ router.route('/').get(async (req, res) => {
     }
 });
 
-router.route('/agregar').get(async (req, res) => {
+router.route('/editar').get(async (req, res) => {
   try {
     const proyectos = await proyectosModel.get();
     const grupos = await gruposModel.get();
@@ -40,6 +40,17 @@ router.route('/:id').get(async (req, res)=>{
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
+router.route('/:editar').post(async (req, res)=>{
+  const {grupo, id_proyecto} = req.body;
+  if (grupo == ""){
+    res.redirect('/grupos/editar');
+  } else {
+  gruposModel.insert(grupo, id_proyecto)
+    .then(()=> res.redirect('/grupos/editar'))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
+})
+
 router.route('/').post((req, res)=>{
   const {grupo, id_proyecto} = req.body;
   gruposModel.insert(grupo, id_proyecto)
@@ -47,9 +58,9 @@ router.route('/').post((req, res)=>{
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/:id').delete((req, res)=>{
+router.route('/borrar/:id').get((req, res)=>{
   gruposModel.delete(req.params.id)
-    .then(()=> res.json("Grupo Borrado"))
+    .then(()=> res.redirect('/grupos/editar'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 

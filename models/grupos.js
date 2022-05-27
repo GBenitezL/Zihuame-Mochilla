@@ -8,7 +8,10 @@ module.exports = {
         return result;
     },
     async get() {
-        const result = await db.query(`select * from "Grupos"`);
+        const result = await db.query(`select g.*, p."Proyecto"
+        from "Grupos" g
+        inner join "Proyectos" p
+        on g.id_proyecto = p.id_proyecto`);
         return result;
     },
     async getById(id) {
@@ -24,14 +27,16 @@ module.exports = {
         return result;
     },
     async update(id, grupo, id_proyecto) {
-        const result = db.query(`update "Grupos"
+        const result = await db.query(`update "Grupos"
         set "Grupo" = $1,
         "id_proyecto" = $2
         where id_grupo = $3`, [grupo, id_proyecto, id]);
         return result;
     },
     async delete(id) {
-        const result = db.query(`delete from "Grupos"
+        const relacion = await db.query(`delete from "Beneficiarios_Grupos"
+        where id_grupo = $1`, [id]);
+        const result = await db.query(`delete from "Grupos"
         where id_grupo = $1`, [id]);
         return result;
     }

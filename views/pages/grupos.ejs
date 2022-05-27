@@ -17,13 +17,14 @@
         <button id="filtrar" type="button" class="btn btn-primary">Filtrar</button>
     </div>
 
-    <button id="botonDescarga" type="button" class="btn btn-primary">Descargar CSV </button>
+    <button id="botonDescarga" type="button" class="btn btn-success">Descargar CSV </button>
+    <a class="btn btn-primary" href="/grupos/editar">Editar Grupos</a>   
     <a class="btn btn-secondary" href="/beneficiarios">Volver</a>   
     <br>
     <table class="table table-hover" id="tabla">
         <tr>
             <th data-column="id_beneficiario" data-order="desc">ID</th>
-            <th data-column="Nombre" data-order="desc">Nombre</th>
+            <th data-column="Nombre(s)" data-order="desc">Nombre</th>
             <th data-column="ApellidoP" data-order="desc">Apellido Paterno</th>
             <th data-column="ApellidoM" data-order="desc">Apellido Materno</th>
             <th data-column="Sexo" data-order="desc">Sexo</th>
@@ -84,8 +85,9 @@
                     '<td>' + miembros[i]['Grado Escolar'] + '</td>' +
                     '<td>' + agregado.toLocaleDateString('es-ES') + '</td>' +
                     `<td class="excluir"><a href="/grupos/borrar/${miembros[i].id_beneficiario}/${miembros[i].id_grupo}" 
-                        class="btn btn-danger"
-                        onclick="return confirm('¿Estás seguro de que quieres borrar este beneficiario?')" >Borrar</a></td>` +
+                        class="btn btn-danger" onclick=
+                        "return confirm('¿Estás seguro de que quieres quitar a este beneficiario de este grupo?')">
+                        Quitar de Grupo</a></td>` +
                 '</tr>';
                 cuerpoTabla.innerHTML += fila;
             }

@@ -1,9 +1,63 @@
 [/- include("../partials/header.ejs") /]
 
 <body style="width: 90%; margin: auto;">
-<h1>Agregar un Grupo</h1>
+    <h1>Editar Grupos</h1>
 
-[/- include("../partials/scripts.ejs") /]
+    <h3>Agregar un Grupo</h3>
+    <form action="/grupos/editar" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="id_proyecto">Proyecto</label>
+            </div>
+            <select class="custom-select" id="id_proyecto" name="id_proyecto">
+                [/ for (var i=0; i < proyectos.length; i++) { /] <option value="[/=proyectos[i].id_proyecto/]">
+                    [/= proyectos[i].Proyecto /]
+                    </option>
+                    [/ } /]
+            </select>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="form-outline">
+                <input type="text" id="nombre" class="form-control form-control-lg" name="grupo" />
+                <label class="form-label" for="grupo">Nombre del Nuevo Grupo</label>
+            </div>
+        </div>
+        <div class="mt-4 pt-2"">
+            <a class=" btn btn-secondary btn-lg" href="/beneficiarios">Volver</a>
+            <input class=" btn btn-primary btn-lg" type="submit" value="Guardar">
+        </div>
+    </form>
+    <br>
+
+    <h3>Borrar Grupos</h3>
+    <table class="table table-hover" id="tabla">
+        <thead>
+            <tr>
+                <th>Grupos</th>
+                <th>Proyectos</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            [/ for (var i=0; i < grupos.length; i++) { /] <tr>
+                <td>[/= grupos[i].Grupo /]</td>
+                <td>[/= grupos[i].Proyecto /]</td>
+                <td><a href="/grupos/borrar/[/=grupos[i].id_grupo/]" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este grupo?')">
+                        Borrar</a></td>
+                </tr>
+                [/ } /]
+        </tbody>
+    </table>
+    [/- include("../partials/scripts.ejs") /]
+
+    <script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#tabla").tablesorter();
+        }
+        ); 
+    </script>
 </body>
 
 </html>
