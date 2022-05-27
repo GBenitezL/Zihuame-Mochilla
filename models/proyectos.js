@@ -1,10 +1,10 @@
 const db = require('../public/js/db');
 module.exports = {
-    async insert(grupo) {
+    async insert(proyecto) {
         let result = await db.query(`insert into "Proyectos"
-        ("Proyecto", "id_proyecto")
+        ("Proyecto")
         values
-        ($1)`, [grupo]);
+        ($1)`, [proyecto]);
         return result;
     },
     async get() {
@@ -22,6 +22,8 @@ module.exports = {
         return result;
     },
     async delete(id) {
+        const relacion = db.query(`delete from "Grupos"
+        where id_proyecto = $1`, [id]);
         const result = db.query(`delete from "Proyectos"
         where id_proyecto = $1`, [id]);
         return result;

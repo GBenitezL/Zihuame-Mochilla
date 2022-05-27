@@ -34,19 +34,40 @@ router.route('/editar').get(async (req, res) => {
   }
 })
 
+router.route('/proyectos').get(async (req, res) => {
+  try {
+    const proyectos = await proyectosModel.get();
+    res.render('pages/proyectos.ejs', {proyectos:proyectos.rows});
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+})
+
 router.route('/:id').get(async (req, res)=>{
   const result = await gruposModel.getById(req.params.id)
     .then(() =>res.json(result))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/:editar').post(async (req, res)=>{
+router.route('/editar').post(async (req, res)=>{
   const {grupo, id_proyecto} = req.body;
   if (grupo.replace(/\s/g, '') == ''){
     res.redirect('/grupos/editar');
   } else {
   gruposModel.insert(grupo, id_proyecto)
     .then(()=> res.redirect('/grupos/editar'))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
+})
+
+router.route('/proyectos').post(async (req, res)=>{
+  const {proyecto} = req.body;
+  if (proyecto.replace(/\s/g, '') == ''){
+    res.redirect('/grupos/proyectos');
+  } else {
+  proyectosModel.insert(proyecto)
+    .then(()=> res.redirect('/grupos/proyectos'))
     .catch(err => res.status(400).json('Error: ' + err));
   }
 })
@@ -61,6 +82,12 @@ router.route('/').post((req, res)=>{
 router.route('/borrar/:id').get((req, res)=>{
   gruposModel.delete(req.params.id)
     .then(()=> res.redirect('/grupos/editar'))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
+router.route('/proyectos/borrar/:id').get((req, res)=>{
+  proyectosModel.delete(req.params.id)
+    .then(()=> res.redirect('/grupos/proyectos'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 

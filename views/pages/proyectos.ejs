@@ -1,0 +1,52 @@
+[/- include("../partials/header.ejs") /]
+
+<body style="width: 90%; margin: auto;">
+    <h1>Editar Proyectos</h1>
+
+    <h3>Agregar un Proyecto</h3>
+    <form action="/grupos/proyectos" method="post">
+        <div class="col-md-4 mb-4">
+            <div class="form-outline">
+                <input type="text" id="nombre" class="form-control form-control-lg" name="proyecto" />
+                <label class="form-label" for="proyecto">Nombre del Nuevo Proyecto</label>
+            </div>
+        </div>
+        <div class="mt-4 pt-2"">
+            <a class=" btn btn-secondary btn-lg" href="/beneficiarios">Volver</a>
+            <input class=" btn btn-primary btn-lg" type="submit" value="Guardar">
+        </div>
+    </form>
+    <br>
+
+    <h3>Borrar Proyecto</h3>
+    <table class="table table-hover" id="tabla">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Proyectos</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            [/ for (var i=0; i < proyectos.length; i++) { /] <tr>
+                <td>[/= proyectos[i].id_proyecto /]</td>
+                <td>[/= proyectos[i].Proyecto /]</td>
+                <td><a href="/grupos/proyectos/borrar/[/=proyectos[i].id_proyecto/]" class="btn btn-danger" 
+                    onclick="return confirm('¿Estás seguro de que quieres borrar este grupo? \n Se borraran todos los grupos de este proyecto')">
+                        Borrar</a></td>
+                </tr>
+                [/ } /]
+        </tbody>
+    </table>
+    [/- include("../partials/scripts.ejs") /]
+
+    <script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#tabla").tablesorter();
+        }
+        ); 
+    </script>
+</body>
+
+</html>
