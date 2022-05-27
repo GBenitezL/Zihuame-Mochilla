@@ -42,7 +42,7 @@ router.route('/:id').get(async (req, res)=>{
 
 router.route('/:editar').post(async (req, res)=>{
   const {grupo, id_proyecto} = req.body;
-  if (grupo == ""){
+  if (grupo.replace(/\s/g, '') == ''){
     res.redirect('/grupos/editar');
   } else {
   gruposModel.insert(grupo, id_proyecto)
