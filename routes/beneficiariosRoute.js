@@ -2,6 +2,7 @@ const express = require('express');
 const beneficiariosModel = require('../models/beneficiarios');
 const gruposModel = require('../models/grupos');
 const router = express.Router();
+const { checkAuth } = require('../middlewares/auth');
 
 router.route('/').get(async (req, res) => {
   try {

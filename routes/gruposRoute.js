@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../public/js/db');
+const db = require('../utils/db');
 const beneficiariosModel = require('../models/beneficiarios')
 const gruposModel = require('../models/grupos');
 const proyectosModel = require('../models/proyectos');

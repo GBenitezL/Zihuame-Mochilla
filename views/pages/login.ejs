@@ -1,0 +1,23 @@
+[/- include("../partials/header.ejs") /]
+
+<body style="width: 90%; margin: auto;">
+    <h1>Login</h1>
+    <form action="/auth/login" method="post">
+        <div class="form-outline mb-4">
+            <input type="text" id="username" class="form-control" name="username" />
+            <label class="form-label" for="username">Nombre de Usuario</label>
+        </div>
+
+        <div class="form-outline mb-4">
+            <input type="password" id="password" class="form-control" name="password"/>
+            <label class="form-label" for="password">Contraseña</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4">Iniciar Sesion</button>
+        </div>
+    </form>
+
+    [/- include("../partials/scripts.ejs") /]
+</body>
+
+</html>

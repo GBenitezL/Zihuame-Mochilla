@@ -1,4 +1,4 @@
-const db = require('../public/js/db');
+const db = require('../utils/db');
 module.exports = {
     async insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
         calle, noExt, colonia, municipio, etnia, grado, fechaAgregado) {

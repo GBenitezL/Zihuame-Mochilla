@@ -1,4 +1,4 @@
-const db = require('../public/js/db');
+const db = require('../utils/db');
 module.exports = {
     async insert(grupo, id_proyecto) {
         let result = await db.query(`insert into "Grupos"
