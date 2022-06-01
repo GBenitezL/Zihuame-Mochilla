@@ -1,7 +1,7 @@
 [/- include("../partials/header.ejs") /]
 
 <body style="margin:auto; width: 90%;">
-    <form method="post" action="/beneficiarios/agregar">
+    <form method="post" action="/beneficiarios/agregar" class="form-inline">
         <h1>Dar de alta un Beneficiario</h1>
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -32,7 +32,7 @@
                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-3 mb-4">
                 <h6 class="mb-2 pb-1">Sexo </h6>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sexo" id="femenino" value="Femenino" checked />
@@ -65,9 +65,16 @@
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="form-outline">
-                    <input type="text" id="municipio" class="form-control form-control-lg" name="municipio" />
-                    <label class="form-label" for="municipio">Municipio</label>
+                <div class="input-group col-md-3 mb-4">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="etnia">Municipio</label>
+                    </div>
+                    <select class="custom-select" id="municipio" name="municipio">
+                        [/ for (var i=0; i < municipios.length; i++) { /] <option value="[/=municipios[i].Municipio/]">
+                            [/= municipios[i].Municipio; /]
+                            </option>
+                            [/ } /]
+                    </select>
                 </div>
             </div>
         </div>
@@ -75,14 +82,21 @@
         <div class="row">
             <div class="col-md-6 mb-4 pb-2">
                 <div class="form-outline">
-                    <input type="text" id="etnia" class="form-control form-control-lg" name="etnia" />
-                    <label class="form-label" for="etnia">Etnia</label>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4 pb-2">
-                <div class="form-outline">
                     <input type="text" id="grado" class="form-control form-control-lg" name="grado" />
                     <label class="form-label" for="grado">Grado Escolar</label>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="input-group col-md-3 mb-4">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="etnia">Etnia</label>
+                    </div>
+                    <select class="custom-select" id="etnia" name="etnia">
+                        [/ for (var i=0; i < etnias.length; i++) { /] <option value="[/=etnias[i].Etnia/]">
+                            [/= etnias[i].Etnia; /]
+                            </option>
+                            [/ } /]
+                    </select>
                 </div>
             </div>
         </div>

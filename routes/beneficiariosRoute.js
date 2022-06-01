@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../utils/db');
 const beneficiariosModel = require('../models/beneficiarios');
 const gruposModel = require('../models/grupos');
 const router = express.Router();
@@ -18,7 +19,9 @@ router.route('/').get(async (req, res) => {
 
 router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) => {
   try {
-    res.render('pages/agregar.ejs');
+    const etnias = await db.query('select * from "Etnias"');
+    const municipios = await db.query('select * from "Municipios"');
+    res.render('pages/agregar.ejs', { etnias:etnias.rows, municipios:municipios.rows });
   } catch (err) {
     console.error(err);
     res.send("Error " + err);
@@ -26,16 +29,19 @@ router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) 
 })
 
 router.route('/editar/:id').get(checkRoleAuth(['Administrador']), async (req, res) => {
+  const etnias = await db.query('select * from "Etnias"');
+  const municipios = await db.query('select * from "Municipios"');
   beneficiariosModel
     .getById(req.params.id)
     .then(beneficiario => {
       if (beneficiario) {
-        res.render('pages/editar.ejs', { beneficiario: beneficiario })
+        res.render('pages/editar.ejs', { beneficiario: beneficiario, etnias: etnias.rows, municipios:municipios.rows })
       } else {
         res.status(500).send('No existe beneficiario con ese ID');
       }
     })
     .catch(err => {
+      console.log(err)
       return res.status(500).send("Error obteniendo beneficiario");
     })
 })
