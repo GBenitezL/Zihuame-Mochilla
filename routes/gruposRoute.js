@@ -37,16 +37,6 @@ router.route('/editar').get(checkRoleAuth(['Administrador']), async (req, res) =
   }
 })
 
-router.route('/proyectos').get(checkRoleAuth(['Administrador']), async (req, res) => {
-  try {
-    const proyectos = await proyectosModel.get();
-    res.render('pages/proyectos.ejs', {proyectos:proyectos.rows});
-  } catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-})
-
 router.route('/:id').get(async (req, res)=>{
   const result = await gruposModel.getById(req.params.id)
     .then(() =>res.json(result))
@@ -60,17 +50,6 @@ router.route('/editar').post(checkRoleAuth(['Administrador']), async (req, res)=
   } else {
   gruposModel.insert(grupo, id_proyecto)
     .then(()=> res.redirect('/grupos/editar'))
-    .catch(err => res.status(400).json('Error: ' + err));
-  }
-})
-
-router.route('/proyectos').post(checkRoleAuth(['Administrador']), async (req, res)=>{
-  const {proyecto} = req.body;
-  if (proyecto.replace(/\s/g, '') == ''){
-    res.redirect('/grupos/proyectos');
-  } else {
-  proyectosModel.insert(proyecto)
-    .then(()=> res.redirect('/grupos/proyectos'))
     .catch(err => res.status(400).json('Error: ' + err));
   }
 })
@@ -90,7 +69,7 @@ router.route('/borrar/:id').get(checkRoleAuth(['Administrador']), (req, res)=>{
 
 router.route('/proyectos/borrar/:id').get(checkRoleAuth(['Administrador']), (req, res)=>{
   proyectosModel.delete(req.params.id)
-    .then(()=> res.redirect('/grupos/proyectos'))
+    .then(()=> res.redirect('/programas/editar'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
