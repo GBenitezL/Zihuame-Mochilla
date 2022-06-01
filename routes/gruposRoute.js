@@ -37,7 +37,7 @@ router.route('/editar').get(checkRoleAuth(['Administrador']), async (req, res) =
   }
 })
 
-router.route('/proyectos').get(async (req, res) => {
+router.route('/proyectos').get(checkRoleAuth(['Administrador']), async (req, res) => {
   try {
     const proyectos = await proyectosModel.get();
     res.render('pages/proyectos.ejs', {proyectos:proyectos.rows});

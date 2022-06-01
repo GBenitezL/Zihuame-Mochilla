@@ -24,7 +24,7 @@ app.use('/beneficiarios', beneficiariosRouter);
 app.use('/grupos', gruposRouter);
 app.use('/auth', authRouter);
 app.get('/', (req, res)=>
-    res.redirect('/beneficiarios')
+    res.redirect('/auth/login')
 )
 
 //Configuracion EJS

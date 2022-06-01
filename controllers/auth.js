@@ -9,7 +9,7 @@ const loginCtrl = async (req, res) => {
         const user = await userModel.getByUserName(username);
         if (!user){
             res.status(404)
-            res.send({error:'Usuario no encontrado'});
+            res.send('<h1>Error: Usuario no encontrado</h1>');
             return
         }
         const checkPassword = await compare(password, user.Password)
