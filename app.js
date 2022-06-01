@@ -3,6 +3,7 @@ const express = require("express");
 var path = require('path');
 const ejs = require("ejs");
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
 
 //Rutas
 const beneficiariosRouter = require('./routes/beneficiariosRoute');
@@ -12,6 +13,7 @@ const authRouter = require('./routes/authRoute');
 //Configuracion Server
 const port = process.env.PORT || 3000;
 const app = express();
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());

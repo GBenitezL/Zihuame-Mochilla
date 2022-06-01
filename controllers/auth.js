@@ -1,7 +1,7 @@
 const { encrypt, compare } = require('../utils/handleBcrypt');
 const userModel = require('../models/usuario');
 const { tokenSign } = require('../utils/generateToken');
-const { httpError } = require('../utils/handleError')
+const { httpError } = require('../utils/handleError');
 
 const loginCtrl = async (req, res) => {
     try {
@@ -15,16 +15,20 @@ const loginCtrl = async (req, res) => {
         const checkPassword = await compare(password, user.Password)
         const tokenSession = await tokenSign(user)
         if (checkPassword){
-            res.send({data:user, token:tokenSession});
+            res
+                .cookie('access-token', tokenSession)
+                .redirect('/beneficiarios')
             return;
         }
         if (!checkPassword) {
-            res.status(409)
-            res.send({error:'Contraseña Invalida'});
+            res
+            .status(409)
+            .cookie('access-token', '')
+            .send('<h1>Error: Contraseña Invalida</h1>');
             return;
         }
     } catch (err){
-        httpError(res, err)
+        res.send(err)
     }
 }
 

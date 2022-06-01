@@ -4,6 +4,9 @@ const beneficiariosModel = require('../models/beneficiarios')
 const gruposModel = require('../models/grupos');
 const proyectosModel = require('../models/proyectos');
 const router = express.Router();
+const { checkAuth, checkRoleAuth } = require('../middlewares/auth');
+
+router.use(checkAuth);
 
 router.route('/').get(async (req, res) => {
     try {
@@ -23,7 +26,7 @@ router.route('/').get(async (req, res) => {
     }
 });
 
-router.route('/editar').get(async (req, res) => {
+router.route('/editar').get(checkRoleAuth(['Administrador']), async (req, res) => {
   try {
     const proyectos = await proyectosModel.get();
     const grupos = await gruposModel.get();
@@ -50,7 +53,7 @@ router.route('/:id').get(async (req, res)=>{
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/editar').post(async (req, res)=>{
+router.route('/editar').post(checkRoleAuth(['Administrador']), async (req, res)=>{
   const {grupo, id_proyecto} = req.body;
   if (grupo.replace(/\s/g, '') == ''){
     res.redirect('/grupos/editar');
@@ -61,7 +64,7 @@ router.route('/editar').post(async (req, res)=>{
   }
 })
 
-router.route('/proyectos').post(async (req, res)=>{
+router.route('/proyectos').post(checkRoleAuth(['Administrador']), async (req, res)=>{
   const {proyecto} = req.body;
   if (proyecto.replace(/\s/g, '') == ''){
     res.redirect('/grupos/proyectos');
@@ -72,33 +75,33 @@ router.route('/proyectos').post(async (req, res)=>{
   }
 })
 
-router.route('/').post((req, res)=>{
+router.route('/').post(checkRoleAuth(['Administrador']), (req, res)=>{
   const {grupo, id_proyecto} = req.body;
   gruposModel.insert(grupo, id_proyecto)
     .then(()=> res.json("Grupo Insertado Insertado"))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/borrar/:id').get((req, res)=>{
+router.route('/borrar/:id').get(checkRoleAuth(['Administrador']), (req, res)=>{
   gruposModel.delete(req.params.id)
     .then(()=> res.redirect('/grupos/editar'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/proyectos/borrar/:id').get((req, res)=>{
+router.route('/proyectos/borrar/:id').get(checkRoleAuth(['Administrador']), (req, res)=>{
   proyectosModel.delete(req.params.id)
     .then(()=> res.redirect('/grupos/proyectos'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/:id').post((req, res)=>{
+router.route('/:id').post(checkRoleAuth(['Administrador']), (req, res)=>{
   const {grupo, id_proyecto} = req.body;
   gruposModel.update(req.params.id, grupo, id_proyecto)
     .then(()=> res.json("Beneficiario Actualizado"))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/borrar/:id/:grupo').get(async (req, res) =>{
+router.route('/borrar/:id/:grupo').get(checkRoleAuth(['Administrador']), async (req, res) =>{
   const id_beneficiario = req.params.id;
   const id_grupo = req.params.grupo;
   beneficiariosModel.deleteGroup(id_beneficiario, id_grupo)
