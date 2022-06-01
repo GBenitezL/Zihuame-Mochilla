@@ -22,9 +22,13 @@ module.exports = {
         return result;
     },
     async delete(id) {
-        const relacion = db.query(`delete from "Grupos"
+        const borrarRelacion = await db.query(`delete from "Beneficiarios_Grupos" bg 
+        where "id_grupo" in 
+        (select "id_grupo" from "Grupos" 
+        where id_proyecto = $1)`, [id]);
+        const borrarGrupos = await db.query(`delete from "Grupos"
         where id_proyecto = $1`, [id]);
-        const result = db.query(`delete from "Proyectos"
+        const result = await db.query(`delete from "Proyectos"
         where id_proyecto = $1`, [id]);
         return result;
     }

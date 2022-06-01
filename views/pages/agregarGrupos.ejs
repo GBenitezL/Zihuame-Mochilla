@@ -2,10 +2,10 @@
 
 <body style="width: 90%; margin: auto;">
 
-    <h1>Grupos de [/= beneficiario.Nombre/]</h1>
+    <h1>Proyectos de [/= beneficiario.Nombre/]</h1>
 
     <table class="table table-hover">
-        <th>Grupos Activos</th>
+        <th>Proyectos Activos</th>
         [/ for (var i=0; i < gruposAgregados.length; i++) { /] 
             <tr>
                 <td>[/=gruposAgregados[i].Grupo/]</td>
@@ -16,11 +16,11 @@
         [/ } /]
     </table>
 
-    <h3>Agregar a un Grupo</h3>
+    <h3>Agregar a un Proyecto</h3>
     <form action="/beneficiarios/grupos/[/=beneficiario.id_beneficiario/]" method="post">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="selectGrupo">Grupos</label>
+                <label class="input-group-text" for="selectGrupo">Proyectos</label>
             </div>
             <select class="custom-select" id="grupo" name="id_grupo">
                 [/ for (var i=0; i < grupos.length; i++) { /] <option value="[/=grupos[i].id_grupo/]">

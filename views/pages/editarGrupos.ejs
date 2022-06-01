@@ -1,13 +1,13 @@
 [/- include("../partials/header.ejs") /]
 
 <body style="width: 90%; margin: auto;">
-    <h1>Editar Grupos</h1>
+    <h1>Editar Proyectos</h1>
 
-    <h3>Agregar un Grupo</h3>
+    <h3>Agregar un Proyecto</h3>
     <form action="/grupos/editar" method="post">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="id_proyecto">Proyecto</label>
+                <label class="input-group-text" for="id_proyecto">Programa</label>
             </div>
             <select class="custom-select" id="id_proyecto" name="id_proyecto">
                 [/ for (var i=0; i < proyectos.length; i++) { /] <option value="[/=proyectos[i].id_proyecto/]">
@@ -19,7 +19,7 @@
         <div class="col-md-4 mb-4">
             <div class="form-outline">
                 <input type="text" id="nombre" class="form-control form-control-lg" name="grupo" />
-                <label class="form-label" for="grupo">Nombre del Nuevo Grupo</label>
+                <label class="form-label" for="grupo">Nombre del Nuevo Proyecto</label>
             </div>
         </div>
         <div class="mt-4 pt-2"">
@@ -29,12 +29,12 @@
     </form>
     <br>
 
-    <h3>Borrar Grupos</h3>
+    <h3>Borrar Proyectos</h3>
     <table class="table table-hover" id="tabla">
         <thead>
             <tr>
-                <th>Grupos</th>
-                <th>Proyectos</th>
+                <th>Proyecto</th>
+                <th>Programa</th>
                 <th>Borrar</th>
             </tr>
         </thead>

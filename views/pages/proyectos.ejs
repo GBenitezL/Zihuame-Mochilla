@@ -1,14 +1,14 @@
 [/- include("../partials/header.ejs") /]
 
 <body style="width: 90%; margin: auto;">
-    <h1>Editar Proyectos</h1>
+    <h1>Editar Programas</h1>
 
-    <h3>Agregar un Proyecto</h3>
+    <h3>Agregar un Programa</h3>
     <form action="/grupos/proyectos" method="post">
         <div class="col-md-4 mb-4">
             <div class="form-outline">
                 <input type="text" id="nombre" class="form-control form-control-lg" name="proyecto" />
-                <label class="form-label" for="proyecto">Nombre del Nuevo Proyecto</label>
+                <label class="form-label" for="proyecto">Nombre del Nuevo Programa</label>
             </div>
         </div>
         <div class="mt-4 pt-2"">
@@ -18,21 +18,19 @@
     </form>
     <br>
 
-    <h3>Borrar Proyecto</h3>
+    <h3>Borrar Programas</h3>
     <table class="table table-hover" id="tabla">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Proyectos</th>
+                <th>Programas</th>
                 <th>Borrar</th>
             </tr>
         </thead>
         <tbody>
             [/ for (var i=0; i < proyectos.length; i++) { /] <tr>
-                <td>[/= proyectos[i].id_proyecto /]</td>
                 <td>[/= proyectos[i].Proyecto /]</td>
                 <td><a href="/grupos/proyectos/borrar/[/=proyectos[i].id_proyecto/]" class="btn btn-danger" 
-                    onclick="return confirm('¿Estás seguro de que quieres borrar este grupo? \n Se borraran todos los grupos de este proyecto')">
+                    onclick="return confirm('¿Estás seguro de que quieres borrar este programa? \n Se borraran todos los proyectos de este programa')">
                         Borrar</a></td>
                 </tr>
                 [/ } /]
