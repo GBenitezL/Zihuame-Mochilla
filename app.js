@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const beneficiariosRouter = require('./routes/beneficiariosRoute');
 const gruposRouter = require('./routes/gruposRoute');
 const programasRouter = require('./routes/programasRoute');
+const atributosRouter = require('./routes/atributosRoute');
 const authRouter = require('./routes/authRoute');
 
 //Configuracion Server
@@ -24,6 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/beneficiarios', beneficiariosRouter);
 app.use('/grupos', gruposRouter);
 app.use('/programas', programasRouter);
+app.use('/atributos', atributosRouter);
 app.use('/auth', authRouter);
 app.get('/', (req, res)=>
     res.redirect('/beneficiarios')

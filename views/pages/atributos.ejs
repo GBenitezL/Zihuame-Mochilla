@@ -1,0 +1,87 @@
+[/- include("../partials/header.ejs") /]
+
+<body style="width: 90%; margin: auto;">
+    <h1>Modificar Campos</h1>
+
+    <h3>Agregar una Etnia</h3>
+    <form action="/atributos/etnias" method="post">
+        <div class="col-md-4 mb-4">
+            <div class="form-outline">
+                <input type="text" id="etnia" class="form-control form-control-lg" name="etnia" />
+                <label class="form-label" for="etnia">Nombre de la Nueva Etnia</label>
+            </div>
+        </div>
+        <div class="mt-4 pt-2"">
+            <a class=" btn btn-secondary btn-lg" href="/beneficiarios">Volver</a>
+            <input class=" btn btn-primary btn-lg" type="submit" value="Guardar">
+        </div>
+    </form>
+    <br>
+
+    <h3>Borrar Etnias</h3>
+    <table class="table table-hover" id="tablaEtnias">
+        <thead>
+            <tr>
+                <th>Etnias</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            [/ for (var i=0; i < etnias.length; i++) { /] <tr>
+                <td>[/= etnias[i].Etnia /]</td>
+                <td><a href="/atributos/etnias/borrar/[/=etnias[i].Etnia/]" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que quieres borrar esta etnia?')">
+                        Borrar</a></td>
+                </tr>
+                [/ } /]
+        </tbody>
+    </table>
+
+
+    <h3>Agregar un Municipio</h3>
+    <form action="/atributos/municipios" method="post">
+        <div class="col-md-4 mb-4">
+            <div class="form-outline">
+                <input type="text" id="municipio" class="form-control form-control-lg" name="municipio" />
+                <label class="form-label" for="municipio">Nombre del Nuevo Municipio</label>
+            </div>
+        </div>
+        <div class="mt-4 pt-2"">
+            <a class=" btn btn-secondary btn-lg" href="/beneficiarios">Volver</a>
+            <input class=" btn btn-primary btn-lg" type="submit" value="Guardar">
+        </div>
+    </form>
+    <br>
+
+    <h3>Borrar Municipios</h3>
+    <table class="table table-hover" id="tablaMunicipios">
+        <thead>
+            <tr>
+                <th>Municipios</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            [/ for (var i=0; i < municipios.length; i++) { /] <tr>
+                <td>[/= municipios[i].Municipio /]</td>
+                <td><a href="/atributos/municipios/borrar/[/=municipios[i].Municipio/]" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este municipio?')">
+                        Borrar</a></td>
+                </tr>
+                [/ } /]
+        </tbody>
+    </table>
+
+    [/- include("../partials/scripts.ejs") /]
+
+    <script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#tablaEtnias").tablesorter();
+            $("#tablaMunicipios").tablesorter();
+        }
+        ); 
+    </script>
+</body>
+
+</html>
