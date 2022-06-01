@@ -16,7 +16,7 @@ module.exports = {
         return result.rows[0];
     },
     async update(id, grupo, id_proyecto) {
-        const result = db.query(`update "Proyectos"
+        const result = await db.query(`update "Proyectos"
         set "Proyecto" = $1
         where id_proyecto = $2`, [grupo, id]);
         return result;

@@ -20,7 +20,7 @@ module.exports = {
     },
     async update(id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
         calle, noExt, colonia, municipio, etnia, grado) {
-        const result = db.query(`update "Beneficiarios"
+        const result = await db.query(`update "Beneficiarios"
         set "Nombre" = $2,
         "Apellido Paterno" = $3,
         "Apellido Materno" = $4,
@@ -37,21 +37,21 @@ module.exports = {
         return result;
     },
     async delete(id) {
-        const result = db.query(`delete from "Beneficiarios"
+        const result = await db.query(`delete from "Beneficiarios"
         where id_beneficiario = $1`, [id]);
         return result;
     },
     async addGroup(id_beneficiario, id_grupo) {
-        const result = db.query(`insert into "Beneficiarios_Grupos" values ($1, $2)`, [id_beneficiario, id_grupo]);
+        const result = await db.query(`insert into "Beneficiarios_Grupos" values ($1, $2)`, [id_beneficiario, id_grupo]);
         return result;
     },
     async deleteGroup(id_beneficiario, id_grupo) {
-        const result = db.query(`delete from "Beneficiarios_Grupos" where id_beneficiario = $1 and id_grupo = $2`, 
+        const result = await db.query(`delete from "Beneficiarios_Grupos" where id_beneficiario = $1 and id_grupo = $2`, 
         [id_beneficiario, id_grupo]);
         return result;
     },
     async deleteFromGroup(id_beneficiario){
-        const result = db.query(`delete from "Beneficiarios_Grupos"
+        const result = await db.query(`delete from "Beneficiarios_Grupos"
         where id_beneficiario = $1`, [id_beneficiario]);
         return result;
     } 

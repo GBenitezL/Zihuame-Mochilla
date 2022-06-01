@@ -18,7 +18,7 @@ module.exports = {
         return result.rows[0];
     },
     async delete(id) {
-        const result = db.query(`delete from "Usuarios"
+        const result = await db.query(`delete from "Usuarios"
         where "Usuario" = $1`, [username]);
         return result;
     }
