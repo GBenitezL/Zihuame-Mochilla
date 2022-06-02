@@ -46,7 +46,7 @@
     <script>
         $('#botonDescarga').on('click', function () {
             var proyectoSeleccionado = $("#selectProyecto").val();
-            $('#tabla').table2csv({ filename: proyectoSeleccionado + '.csv' });
+            $('#tabla').table2csv({ filename: proyectoSeleccionado + '.csv', excludeColumns: '.excluir' });
         })
     </script>
 

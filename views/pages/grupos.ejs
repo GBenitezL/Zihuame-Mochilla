@@ -47,7 +47,7 @@
     <script>
         $('#botonDescarga').on('click', function () {
             var grupoSeleccionado = $("#selectGrupo").val();
-            $('#tabla').table2csv({ filename: grupoSeleccionado + '.csv' });
+            $('#tabla').table2csv({ filename: grupoSeleccionado + '.csv', excludeColumns: '.excluir'});
         })
     </script>
 
