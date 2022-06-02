@@ -36,7 +36,7 @@ const registerCtrl = async(req, res) => {
     const {username, password, role} = req.body;
     const passwordHash = await encrypt(password);
     const registerUser = await userModel.insert(username, passwordHash, role);
-    res.send({data: registerUser});
+    res.redirect('/auth/registrar')
 }
 
 module.exports = { loginCtrl, registerCtrl };
