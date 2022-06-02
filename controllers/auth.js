@@ -24,7 +24,7 @@ const loginCtrl = async (req, res) => {
             res
             .status(409)
             .cookie('access-token', '')
-            .send('<h1>Error: Contraseña Invalida</h1>');
+            .send('<h1>Error: Contraseña Inválida</h1>');
             return;
         }
     } catch (err){

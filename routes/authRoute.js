@@ -36,7 +36,7 @@ router.route('/login').get(async (req, res) => {
       const tokenData = await verifyToken(token);
       const activeUser = tokenData.username;
       if ((admins.rowCount == 1 && user.rows[0].Rol == 'Administrador') || activeUser == user.rows[0].Usuario ) {
-        res.send('<h1>No puedes borrar al único administrador o al administrador activo</h1>')
+        res.send('<h1>No puedes borrar al único administrador o al usuario activo.</h1>')
       } else {
         await db.query('delete from "Usuarios" where "Usuario" = $1', [req.params.usuario])
         res.redirect('/auth/registrar');

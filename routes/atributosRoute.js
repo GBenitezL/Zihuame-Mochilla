@@ -7,7 +7,7 @@ router.use(checkAuth);
 
 router.route('/').get(checkRoleAuth(['Administrador']), async (req, res) => {
     try {
-        const etnias = await db.query(`select * from "Etnias" order by "Etnia" desc`);
+        const etnias = await db.query(`select * from "Etnias" order by "Etnia"`);
         const municipios = await db.query(`select * from "Municipios" order by "Municipio"`);
         res.render('pages/atributos.ejs',
             { etnias: etnias.rows, municipios: municipios.rows });
