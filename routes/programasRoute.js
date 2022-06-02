@@ -17,7 +17,8 @@ router.route('/').get(async (req, res) => {
             inner join "Grupos" g
             on bg."id_grupo" = g."id_grupo"
             inner join "Proyectos" p
-            on g."id_proyecto" = p."id_proyecto"`);
+            on g."id_proyecto" = p."id_proyecto"
+            order by "id_beneficiario" asc`);
         res.render('pages/programas.ejs', 
           { proyectos: proyectos.rows, beneficiarios: beneficiarios.rows } );
     } catch (err) {

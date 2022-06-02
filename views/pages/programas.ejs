@@ -36,6 +36,7 @@
             <th data-column="Etnia" data-order="desc">Etnia</th>
             <th data-column="GradoEscolar" data-order="desc">Grado Escolar</th>
             <th data-column="Fecha Agregado" data-order="desc">Fecha Agregado</th>
+            <th data-column="Grupo" data-order="desc">Grupo</th>
         </tr>
         <tbody id="cuerpoTabla"></tbody>
     </table>
@@ -54,9 +55,13 @@
             var proyectoSeleccionado = $("#selectProyecto").val();
             var beneficiarios = [/- JSON.stringify(beneficiarios) /];
             var miembros = [];
+            var miembroActual = '';
             for (i = 0; i < beneficiarios.length; i++) {
                 if (beneficiarios[i].Proyecto == proyectoSeleccionado) {
-                    miembros.push(beneficiarios[i])
+                    if (beneficiarios[i].id_beneficiario != miembroActual){
+                        miembros.push(beneficiarios[i]);
+                        miembroActual = beneficiarios[i].id_beneficiario;
+                    }
                 }
             }
             var cuerpoTabla = document.getElementById("cuerpoTabla");
@@ -81,6 +86,7 @@
                     '<td>' + miembros[i].Etnia + '</td>' +
                     '<td>' + miembros[i]['Grado Escolar'] + '</td>' +
                     '<td>' + agregado.toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + miembros[i].Grupo + '</td>' +
                 '</tr>';
                 cuerpoTabla.innerHTML += fila;
             }
