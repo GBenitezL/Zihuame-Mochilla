@@ -8,7 +8,7 @@ module.exports = {
         return result;
     },
     async get() {
-        const result = await db.query(`select * from "Proyectos"`);
+        const result = await db.query(`select * from "Proyectos" order by "Proyecto"`);
         return result;
     },
     async getById(id) {

@@ -11,7 +11,8 @@ module.exports = {
         const result = await db.query(`select g.*, p."Proyecto"
         from "Grupos" g
         inner join "Proyectos" p
-        on g.id_proyecto = p.id_proyecto`);
+        on g.id_proyecto = p.id_proyecto
+        order by "Grupo"`);
         return result;
     },
     async getById(id) {
