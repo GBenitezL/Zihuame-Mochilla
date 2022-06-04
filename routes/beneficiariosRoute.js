@@ -19,8 +19,8 @@ router.route('/').get(async (req, res) => {
 
 router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) => {
   try {
-    const etnias = await db.query('select * from "Etnias"');
-    const municipios = await db.query('select * from "Municipios"');
+    const etnias = await db.query('select * from "Etnias" order by "Etnia"');
+    const municipios = await db.query('select * from "Municipios"order by "Municipio"');
     res.render('pages/agregar.ejs', { etnias:etnias.rows, municipios:municipios.rows });
   } catch (err) {
     console.error(err);
