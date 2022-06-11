@@ -20,10 +20,12 @@ module.exports = {
         return result.rows[0];
     },
     async getByUserId(id_beneficiario){
-        const result = await db.query(`select g.id_grupo, g."Grupo"
+        const result = await db.query(`select g.id_grupo, g."Grupo", p."Proyecto"
         from "Beneficiarios_Grupos" bg
         inner join "Grupos" g
         on bg.id_grupo = g.id_grupo
+        inner join "Proyectos" p
+        on g.id_proyecto = p.id_proyecto
         where bg.id_beneficiario = $1`, [id_beneficiario]);
         return result;
     },

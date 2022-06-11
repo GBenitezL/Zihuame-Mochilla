@@ -6,9 +6,12 @@
 
     <table class="table table-hover">
         <th>Proyectos Activos</th>
+        <th>Programa</th>
+        <th>Borrar</th>
         [/ for (var i=0; i < gruposAgregados.length; i++) { /] 
             <tr>
                 <td>[/=gruposAgregados[i].Grupo/]</td>
+                <td>[/=gruposAgregados[i].Proyecto/]</td>
                 <td><a href="/beneficiarios/grupos/borrar/[/= beneficiario.id_beneficiario/]/[/=gruposAgregados[i].id_grupo/]" 
                     class="btn btn-danger" onclick="return confirm('¿Estás seguro de que quieres borrar al beneficiario de este grupo?')">
                     Borrar</a></td>
