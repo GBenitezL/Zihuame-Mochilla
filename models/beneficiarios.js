@@ -11,7 +11,7 @@ module.exports = {
         return result;
     },
     async get() {
-        const result = await db.query(`select * from "Beneficiarios"`);
+        const result = await db.query(`select * from "Beneficiarios" order by id_beneficiario`);
         return result;
     },
     async getById(id) {

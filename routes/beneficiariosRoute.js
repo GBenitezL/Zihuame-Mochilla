@@ -29,8 +29,8 @@ router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) 
 })
 
 router.route('/editar/:id').get(checkRoleAuth(['Administrador']), async (req, res) => {
-  const etnias = await db.query('select * from "Etnias"');
-  const municipios = await db.query('select * from "Municipios"');
+  const etnias = await db.query('select * from "Etnias" order by "Etnia"');
+  const municipios = await db.query('select * from "Municipios" order by "Municipio"');
   beneficiariosModel
     .getById(req.params.id)
     .then(beneficiario => {
