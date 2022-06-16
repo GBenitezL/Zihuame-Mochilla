@@ -17,6 +17,7 @@ const loginCtrl = async (req, res) => {
         if (checkPassword){
             res
                 .cookie('access-token', tokenSession)
+                .cookie('username', username)
                 .redirect('/beneficiarios')
             return;
         }
@@ -24,6 +25,7 @@ const loginCtrl = async (req, res) => {
             res
             .status(409)
             .cookie('access-token', '')
+            .cookie('username', '')
             .send('<h1>Error: Contraseña Inválida</h1>');
             return;
         }

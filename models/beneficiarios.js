@@ -1,13 +1,14 @@
 const db = require('../utils/db');
 module.exports = {
     async insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-        calle, noExt, colonia, municipio, etnia, grado, fechaAgregado) {
+        calle, noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor) {
         let result = await db.query(`insert into "Beneficiarios"
-        ("Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha de Nacimiento", 
-        "Calle", "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar", "Fecha Agregado")
+        ("Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha de Nacimiento", "Calle", 
+        "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar", "Fecha Agregado", "Agregado Por")
         values
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, 
-        [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado, fechaAgregado]);
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`, 
+        [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle,
+         noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor]);
         return result;
     },
     async get() {

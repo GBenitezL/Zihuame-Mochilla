@@ -3,7 +3,7 @@ const db = require('../utils/db');
 const beneficiariosModel = require('../models/beneficiarios');
 const gruposModel = require('../models/grupos');
 const router = express.Router();
-const { checkAuth, checkRoleAuth } = require('../middlewares/auth');
+const { checkAuth } = require('../middlewares/auth');
 
 router.use(checkAuth);
 
@@ -17,7 +17,7 @@ router.route('/').get(async (req, res) => {
   }
 });
 
-router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/agregar').get(async (req, res) => {
   try {
     const etnias = await db.query('select * from "Etnias" order by "Etnia"');
     const municipios = await db.query('select * from "Municipios"order by "Municipio"');
@@ -28,7 +28,7 @@ router.route('/agregar').get(checkRoleAuth(['Administrador']), async (req, res) 
   }
 })
 
-router.route('/editar/:id').get(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/editar/:id').get(async (req, res) => {
   const etnias = await db.query('select * from "Etnias" order by "Etnia"');
   const municipios = await db.query('select * from "Municipios" order by "Municipio"');
   beneficiariosModel
@@ -64,16 +64,18 @@ router.route('/grupos/:id').get(async (req, res) => {
   }
 })
 
-router.route('/agregar').post(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/agregar').post(async (req, res) => {
   const fechaAgregado = new Date().toISOString().split('T')[0];
-  const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado } = req.body;
+  const agregadoPor = req.cookies['username'];
+  const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle,
+    noExt, colonia, municipio, etnia, grado } = req.body;
   beneficiariosModel.insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-    calle, noExt, colonia, municipio, etnia, grado, fechaAgregado)
+    calle, noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor)
     .then(() => res.redirect('/beneficiarios'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/borrar/:id').get(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/borrar/:id').get(async (req, res) => {
   beneficiariosModel.deleteFromGroup(req.params.id)
     .then(() => {
       beneficiariosModel.delete(req.params.id)
@@ -83,14 +85,14 @@ router.route('/borrar/:id').get(checkRoleAuth(['Administrador']), async (req, re
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/editar/:id').post(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/editar/:id').post(async (req, res) => {
   const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado } = req.body;
   beneficiariosModel.update(req.params.id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado)
     .then(() => res.redirect('/beneficiarios'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/grupos/:id').post(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/grupos/:id').post(async (req, res) => {
   const id_beneficiario = req.params.id;
   const { id_grupo } = req.body;
   beneficiariosModel.addGroup(id_beneficiario, id_grupo)
@@ -98,7 +100,7 @@ router.route('/grupos/:id').post(checkRoleAuth(['Administrador']), async (req, r
     .catch(err => res.status(400).json('Error: ' + err));
 })
 
-router.route('/grupos/borrar/:id/:grupo').get(checkRoleAuth(['Administrador']), async (req, res) => {
+router.route('/grupos/borrar/:id/:grupo').get(async (req, res) => {
   const id_beneficiario = req.params.id;
   const id_grupo = req.params.grupo;
   beneficiariosModel.deleteGroup(id_beneficiario, id_grupo)

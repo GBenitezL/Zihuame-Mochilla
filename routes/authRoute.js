@@ -11,6 +11,7 @@ router.route('/login').get(async (req, res) => {
     try {
       res
       .cookie('access-token', '')
+      .cookie('username', '')
       .render('pages/login.ejs');
     } catch (err) {
       console.error(err);
