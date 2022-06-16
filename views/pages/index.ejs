@@ -78,20 +78,8 @@
             var fechaActual = new Date();
             cuerpoTabla.innerHTML = '';
             for (i = 0; i < beneficiarios.length; i++) {
-                var dNacimiento = beneficiarios[i]['Fecha de Nacimiento'].split('-')[0];
-                var mNacimiento = beneficiarios[i]['Fecha de Nacimiento'].split('-')[1];
-                var aNacimiento = beneficiarios[i]['Fecha de Nacimiento'].split('-')[2];
-                aNacimiento = aNacimiento.substr(0,2);
-                var fechaNacimiento = dNacimiento + '-' + mNacimiento + '-' + aNacimiento;
-
-                var dAgregado = beneficiarios[i]['Fecha Agregado'].split('-')[0];
-                var mAgregado = beneficiarios[i]['Fecha Agregado'].split('-')[1];
-                var aAgregado = beneficiarios[i]['Fecha Agregado'].split('-')[2];
-                aAgregado = aAgregado.substr(0,2);
-                var fechaAgregado = dAgregado + '-' + mAgregado + '-' + aAgregado;
-
-                var cumple = new Date(fechaNacimiento);
-                var agregado = new Date(fechaAgregado);
+                var cumple = new Date(beneficiarios[i]['Fecha de Nacimiento']);
+                var agregado = new Date(beneficiarios[i]['Fecha Agregado']);
                 var edad = Math.floor((fechaActual - cumple) / 31557600000);
                 var fila =
                     '<tr>' +
