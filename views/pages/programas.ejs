@@ -77,7 +77,7 @@
                     '<td>' + miembros[i]['Apellido Paterno'] + '</td>' +
                     '<td>' + miembros[i]['Apellido Materno'] + '</td>' +
                     '<td>' + miembros[i].Sexo + '</td>' +
-                    '<td>' + cumple.toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + formatDate(cumple) + '</td>' +
                     '<td>' + edad + '</td>' +
                     '<td>' + miembros[i].Calle + '</td>' +
                     '<td>' + miembros[i].NoExt + '</td>' +
@@ -85,7 +85,7 @@
                     '<td>' + miembros[i].Municipio + '</td>' +
                     '<td>' + miembros[i].Etnia + '</td>' +
                     '<td>' + miembros[i]['Grado Escolar'] + '</td>' +
-                    '<td>' + agregado.toLocaleDateString('es-ES') + '</td>' +
+                    '<td>' + formatDate(agregado) + '</td>' +
                     '<td>' + miembros[i].Grupo + '</td>' +
                 '</tr>';
                 cuerpoTabla.innerHTML += fila;
