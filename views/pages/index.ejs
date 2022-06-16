@@ -79,7 +79,9 @@
             cuerpoTabla.innerHTML = '';
             for (i = 0; i < beneficiarios.length; i++) {
                 var cumple = new Date(beneficiarios[i]['Fecha de Nacimiento']);
+                cumple.setDate(cumple.getDate() + 1);
                 var agregado = new Date(beneficiarios[i]['Fecha Agregado']);
+                agregado.setDate(agregado.getDate() + 1);
                 var edad = Math.floor((fechaActual - cumple) / 31557600000);
                 var fila =
                     '<tr>' +
