@@ -48,6 +48,13 @@
                     <label class="form-check-label" for="masculino">Masculino</label>
                 </div>
             </div>
+            <div class="col-md-2 mb-4">
+                <div class="form-outline">
+                    <input type="text" id="estadoC" class="form-control form-control-lg" name="estadoC"
+                        value="[/= beneficiario['Estado Civil'] /]" />
+                    <label class="form-label" for="Estado Civil">Estado Civil</label>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -88,6 +95,19 @@
             </div>
         </div>
 
+
+        <div class="row">
+
+            <div class="col-md-6 mb-4 pb-2">
+                <div class="form-outline">
+                    <input type="text" id="ciudad" class="form-control form-control-lg" name="ciudad"
+                        value="[/= beneficiario['Ciudad'] /]" />
+                    <label class="form-label" for="Ciudad">Lugar de Origen</label>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-6 mb-4 pb-2">
                 <div class="form-outline">
@@ -96,6 +116,15 @@
                     <label class="form-label" for="grado">Grado Escolar</label>
                 </div>
             </div>
+
+            <div class="col-md-6 mb-4 pb-2">
+                <div class="form-outline">
+                    <input type="text" id="curp" class="form-control form-control-lg" name="curp"
+                        value="[/= beneficiario['CURP'] /]" />
+                    <label class="form-label" for="CURP">CURP</label>
+                </div>
+            </div>
+
             <div class="col-md-6 mb-4">
                 <div class="input-group col-md-3 mb-4">
                     <div class="input-group-prepend">

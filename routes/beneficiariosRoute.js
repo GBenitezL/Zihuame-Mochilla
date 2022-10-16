@@ -68,9 +68,9 @@ router.route('/agregar').post(async (req, res) => {
   const fechaAgregado = new Date().toISOString().split('T')[0];
   const agregadoPor = req.cookies['username'];
   const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle,
-    noExt, colonia, municipio, etnia, grado } = req.body;
+    noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoC} = req.body;
   beneficiariosModel.insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-    calle, noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor)
+    calle, noExt, colonia, municipio, etnia, grado, curp, ciudad,estado, estadoC,fechaAgregado, agregadoPor)
     .then(() => res.redirect('/beneficiarios'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
@@ -86,8 +86,8 @@ router.route('/borrar/:id').get(async (req, res) => {
 })
 
 router.route('/editar/:id').post(async (req, res) => {
-  const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado } = req.body;
-  beneficiariosModel.update(req.params.id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado)
+  const { nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoC} = req.body;
+  beneficiariosModel.update(req.params.id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoC)
     .then(() => res.redirect('/beneficiarios'))
     .catch(err => res.status(400).json('Error: ' + err));
 })
