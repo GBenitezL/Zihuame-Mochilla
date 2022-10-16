@@ -1,14 +1,14 @@
 const db = require('../utils/db');
 module.exports = {
     async insert(nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-        calle, noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor) {
+        calle, noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoCivil, fechaAgregado, agregadoPor) {
         let result = await db.query(`insert into "Beneficiarios"
         ("Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha de Nacimiento", "Calle", 
-        "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar", "Fecha Agregado", "Agregado Por")
+        "NoExt", "Colonia", "Municipio", "Etnia", "Grado Escolar","CURP", "Ciudad", "Estado", "Estado Civil", "Fecha Agregado", "Agregado Por")
         values
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`, 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`, 
         [nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle,
-         noExt, colonia, municipio, etnia, grado, fechaAgregado, agregadoPor]);
+         noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoCivil, fechaAgregado, agregadoPor]);
         return result;
     },
     async get() {
@@ -20,7 +20,7 @@ module.exports = {
         return result.rows[0];
     },
     async update(id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento,
-        calle, noExt, colonia, municipio, etnia, grado) {
+        calle, noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoCivil) {
         const result = await db.query(`update "Beneficiarios"
         set "Nombre" = $2,
         "Apellido Paterno" = $3,
@@ -32,9 +32,13 @@ module.exports = {
         "Colonia" = $9,
         "Municipio" = $10,
         "Etnia" = $11,
-        "Grado Escolar" = $12
+        "Grado Escolar" = $12,
+        "CURP" = $13,
+        "Ciudad" = $14,
+        "Estado" = $15,
+        "Estado Civil" = $16
         where id_beneficiario = $1`,
-        [id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado]);
+        [id, nombre, apellidoP, apellidoM, sexo, fechaNacimiento, calle, noExt, colonia, municipio, etnia, grado, curp, ciudad, estado, estadoCivil]);
         return result;
     },
     async delete(id) {
